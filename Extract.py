@@ -16,14 +16,6 @@ output_template_file = 'D:/OS Shared/test/20211030 Test Assignment/Output.xlsx'
 stopwords_folder = 'D:/OS Shared/test/20211030 Test Assignment/StopWords'
 master_dict_folder = 'D:/OS Shared/test/20211030 Test Assignment/MasterDictionary'
 
-stop_words = set()
-for filename in os.listdir(stopwords_folder):
-    if filename.endswith(".txt"):
-        stop_words.update(read_file(os.path.join(stopwords_folder, filename)))
-
-positive_words = set(read_file(os.path.join(master_dict_folder, 'positive-words.txt')))
-negative_words = set(read_file(os.path.join(master_dict_folder, 'negative-words.txt')))
-
 def read_file(file_path):
     try:
         with open(file_path, 'r', encoding='utf-8') as file:
@@ -35,6 +27,14 @@ def read_file(file_path):
         except UnicodeDecodeError:
             with open(file_path, 'r', encoding='cp1252') as file:
                 return file.read().splitlines()
+            
+stop_words = set()
+for filename in os.listdir(stopwords_folder):
+    if filename.endswith(".txt"):
+        stop_words.update(read_file(os.path.join(stopwords_folder, filename)))
+
+positive_words = set(read_file(os.path.join(master_dict_folder, 'positive-words.txt')))
+negative_words = set(read_file(os.path.join(master_dict_folder, 'negative-words.txt')))
             
 def extract_article(soup):
     title_tag = soup.find('title')
@@ -140,6 +140,18 @@ def analyze_text(file_path):
         'Avg Word Length': avg_word_length,
     }
 
+output_template_df = pd.read_excel(output_template_file)
+results = []
+
+articles_folder = 'articles'
+for filename in os.listdir(articles_folder):
+    if filename.endswith(".txt"):
+        url_id = filename.split('.')[0]
+        file_path = os.path.join(articles_folder, filename)
+        analysis = analyze_text(file_path)
+        analysis['URL_ID'] = str(url_id)
+        results.append(analysis)
+        
 results_df = pd.DataFrame(results)
 output_df = output_template_df.merge(results_df, on='URL_ID', how='left')
 
