@@ -33,7 +33,7 @@ After extraction and text analysis, the program will export the obtained results
 # Execution
 The program can be executed using both Python file `Extract.py` or the Jupyter file `Extract.ipynb` in Google Colab or a system with Jupyter Notebooks compactibility.
 
-For executing the Jupyter file, its is possible to directly run all cells in the notebook as long as the addresses of referenced files and folders (as given [above](#markdown-header-addresses-of-predefined-files-and-folders)). If running the file in Google Colab, the same files will be required to uploaded in the runtime and referenced correctly.
+For executing the Jupyter file, its is possible to directly run all cells in the notebook as long as the addresses of referenced files and folders (as given [above]((https://github.com/SimpNick6703/Data-Extraction-and-Analysis/tree/main#features))). If running the file in Google Colab, the same files will be required to uploaded in the runtime and referenced correctly.
 
 For executing the Python file, simply run it by using `python Extract.py`. Keep note of the addresses and references used in the code.
 
